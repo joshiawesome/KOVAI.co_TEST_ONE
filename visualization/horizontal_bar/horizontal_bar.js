@@ -15,10 +15,21 @@ function Create_Horizontal_Bar(){
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv('../../assets/data/analitycal.csv',function(data){
+  // d3.csv('../../assets/data/analitycal.csv',function(data){
     // console.log(data);
 
-    var subgroups = data.columns.slice(1);
+    data=[
+      {"Type":"Lorem ipsum","Percentage":"85"},
+      {"Type":"Dolor sit","Percentage":"50"},
+      {"Type":"Consectetuer","Percentage":"20"},
+      {"Type":"Adipiscing","Percentage":"45"},
+      {"Type":"Sed Diam","Percentage":"30"},
+      {"Type":"Nonummy","Percentage":"80"},
+      {"Type":"Nibh Euismod","Percentage":"39"},
+      {"Type":"Ullamcorper","Percentage":"65"}
+    ]
+
+    var subgroups = ["Type","Percentage"];
 
     //x-axis
     var x = d3.scaleLinear()
@@ -69,5 +80,5 @@ function Create_Horizontal_Bar(){
     })
 
 
-  });
+  // });
 }

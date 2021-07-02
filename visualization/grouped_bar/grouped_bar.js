@@ -15,10 +15,21 @@ function Create_GroupedBar(){
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv('../../assets/data/average_charts.csv',function(data){
+  // d3.csv('../../assets/data/average_charts.csv',function(data){
     // console.log(data);
 
-    var subgroups = data.columns.slice(1);
+    data=[
+      {"group":"01","type_1":"1600","type_2":"2150"},
+      {"group":"02","type_1":"1500","type_2":"2100"},
+      {"group":"03","type_1":"2400","type_2":"2600"},
+      {"group":"04","type_1":"2700","type_2":"2900"},
+      {"group":"05","type_1":"1900","type_2":"2100"},
+      {"group":"06","type_1":"2700","type_2":"2100"},
+      {"group":"07","type_1":"3000","type_2":"2800"},
+      {"group":"08","type_1":"2300","type_2":"2900"}
+    ]
+
+    var subgroups = ["type_1","type_2"];
     var groups = d3.map(data, function(d){return(d.group)}).keys();
 
     //x-axis
@@ -74,5 +85,5 @@ function Create_GroupedBar(){
       .attr("height", function(d) { return height - y(d.value); })
       .attr("fill", function(d) { return color(d.key); });
 
-  });
+  // });
 }
