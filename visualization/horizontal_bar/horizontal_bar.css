@@ -1,0 +1,22 @@
+.xline path{
+  stroke: #d9d9d9;
+}
+.xline line{
+  stroke: #d9d9d9;
+}
+.xline text{
+  fill:#d9d9d9;
+}
+.yline path{
+  stroke: #d9d9d9;
+}
+.yline line{
+  stroke: #d9d9d9;
+}
+.yline text{
+  fill:#4b6584;
+}
+.label{
+  fill: #4b6584;
+  font-size: 12px;
+}

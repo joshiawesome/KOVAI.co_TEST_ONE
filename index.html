@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOVAI.co Dashboard</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./visualization/grouped_bar/grouped_bar.css">
+<link rel="stylesheet" href="./visualization/map/map.css">
+<link rel="stylesheet" href="./visualization/horizontal_bar/horizontal_bar.css">
+<link rel="stylesheet" href="./visualization/donut/donut.css">
+<!-- d3 v4 -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<!-- font_awesome -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<!--For Navigation-->
+<header>
+
+    <!-- Side Menu -->
+    <nav
+         id="SideMenu"
+         class="collapse d-lg-block sidebar collapse"
+         >
+
+      <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+
+          <a
+             href="#"
+             class="list-group-item list-group-item-action py-2 ripple active"
+             aria-current="true"
+             >
+            <i class="fas fa-home fa-fw me-3"></i
+              ><span>Dashboard</span>
+          </a>
+          <a
+             href="#"
+             class="list-group-item list-group-item-action py-2 ripple"
+             >
+            <i class="fas fa-envelope fa-fw me-3"></i
+              >Messages<span class="badge rounded-pill badge-notification bg-danger" style="color: white;">3</span>
+          </a>
+          <a
+             href="#"
+             class="list-group-item list-group-item-action py-2 ripple"
+             ><i class="fas fa-user fa-fw me-3"></i>
+             <span>Account</span></a
+            >
+          <a
+             href="#"
+             class="list-group-item list-group-item-action py-2 ripple"
+             ><i class="fas fa-chart-pie fa-fw me-3"></i
+            ><span>Chart</span></a
+            >
+          <a
+             href="#"
+             class="list-group-item list-group-item-action py-2 ripple"
+             ><i class="fas fa-calendar fa-fw me-3"></i
+            ><span>Calendar</span></a
+            >
+          <a
+             href="#"
+             class="list-group-item list-group-item-action py-2 ripple"
+             ><i class="fas fa-exclamation-triangle fa-fw me-3"></i><span>Reports</span></a
+            >
+
+        </div>
+      </div>
+
+    </nav>
+    <!-- Side Menu -->
+  
+    <!--Page NavBar -->
+    <nav
+         id="main-navbar"
+         class="navbar navbar-expand-lg navbar-light fixed-top"
+         >
+
+      <div class="container-fluid">
+
+        <!-- HamBurger Menu Implementation -->
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#SideMenu"
+                aria-controls="SideMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+                >
+          <i class="fas fa-bars"></i>
+        </button>
+  
+        <!-- Logo -->
+        <a class="navbar-brand" href="https://www.kovai.co/">
+          <img
+               src="./assets/logo.png"
+               height="25"
+               alt=""
+               loading="lazy"
+               />
+        </a>
+
+        <!-- Search Box -->
+        <form class="d-none d-md-flex input-group w-auto my-auto">
+          <input
+                 autocomplete="off"
+                 type="search"
+                 class="form-control rounded"
+                 placeholder='Search'
+                 style="min-width: 225px"
+                 />
+          <span class="input-group-text "
+                ><i class="fas fa-search"></i
+            ></span>
+        </form>
+  
+        <!--User Profile-->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <li class="nav-item">
+            <a
+               class="nav-link hidden-arrow d-flex align-items-center"
+               href="#"
+               id="navbarDropdownMenuLink"
+               role="button"
+               aria-expanded="false"
+               >
+               <b>Hi, Laura Jane</b>&nbsp;
+              <img
+                   src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
+                   class="rounded-circle"
+                   height="22"
+                   alt=""
+                   loading="lazy"
+                /> 
+            </a>
+          </li>
+        </ul>
+
+      </div>
+     
+    </nav>
+    <!--Page NavBar -->
+
+  </header>
+  <!--For Navigation-->
+  
+  
+  <!--Content-->
+  <main style="margin-top: 58px">
+    <div class="container pt-4">
+
+        <!--first row-->
+        <div class="row">
+            <div class="col-md-12" style="color: #130f40;">
+                <h3>Overview</h3>
+            </div>
+        </div>
+        <!--first row-->
+        
+        <!--second row-->
+        <div class="row" style="margin-top: 1%;">
+
+            <!--first column in second row-->
+            <div class="col-md-6">
+
+                <div class="row">
+
+                    <!--Average Charts-->
+                    <div class="col-md-12">
+
+                        <div class="card shadow bg-white rounded">
+                            <div class="card-header">
+                                Average Charts
+                            </div>
+                            <div class="card-body">
+                                <div id="average_charts"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row" style="margin-top: 2%;">
+
+                     <!--Maps-->
+                     <div class="col-md-12">
+
+                        <div class="card shadow bg-white rounded">
+                            <div class="card-header">
+                                Maps
+                            </div>
+                            <div class="card-body">
+                                <div id="maps"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                
+            </div>
+            <!--first column in second row-->
+
+            <!--second column in second row-->
+            <div class="col-md-6">
+
+                <!--Calculation-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow bg-white rounded">
+                            <div class="card-header">
+                                Calculation
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 calculation">
+                                        Earnings<br/>
+                                        <i class="fas fa-dollar-sign fa-2x icon"></i><br/>
+                                        <span class="numbers"><h4>$ 3,124</h4></span>
+                                    </div>
+                                    <div class="col-md-4 calculation">
+                                        Downloads<br/>
+                                        <i class="fas fa-download fa-2x icon"></i><br/>
+                                        <span class="numbers"><h4>1,340,230</h4></span>
+                                    </div>
+                                    <div class="col-md-4 calculation">
+                                        Favorites<br/>
+                                        <i class="fas fa-star fa-2x icon"></i><br/>
+                                        <span class="numbers"><h4>135,020</h4></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Analitycal-->
+                <div class="row" style="margin-top: 2%;">
+
+                    <!--Horizontal Bar-->
+                    <div class="col-md-8">
+                        <div class="card shadow bg-white rounded">
+                            <div class="card-header">
+                                Analitycal
+                            </div>
+                            <div class="card-body">
+                                <div id="analitycal"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Donut-->
+                    <div class="col-md-4">
+                        <div class="card shadow bg-white rounded">
+                            <div class="card-body">
+                                <div class="row donut">
+                                    <div class="col-md-12">
+                                        <div id="donut_1"></div>
+                                    </div>
+                                </div>
+                                <div class="row donut">
+                                    <div class="col-md-12">
+                                        <div id="donut_2"></div>
+                                    </div>
+                                </div>
+                                <div class="row donut">
+                                    <div class="col-md-12">
+                                        <div id="donut_3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Recent Update-->
+                <div class="row" style="margin-top: 2%;">
+                    <div class="col-md-12">
+                        <div class="card shadow bg-white rounded">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3" style="margin: auto;">
+                                        <span style="color: #3c40c6;"><b>04/07/2021</b></span>
+                                    </div>
+                                    <div class="col-md-9 update">
+                                        <p style="font-size: 15px;">Recent Update</p>
+                                        <p>Software Version:1.0. This design belongs to KOVAI.co and is copyrighted. The latest updated version is 1.0. Last updated on July 4th 2021.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!--second column in second row-->
+
+        </div>
+        <!--second row-->
+  
+    </div>
+  </main>
+  
+<script src="./visualization/responsify.js"></script>
+<script src="./visualization/grouped_bar/grouped_bar.js"></script>
+<script src="./visualization/map/map.js"></script>
+<script src="./visualization/horizontal_bar/horizontal_bar.js"></script>
+<script src="./visualization/donut/donut.js"></script>
+<script src="./script.js"></script>
+</body>
+</html>
